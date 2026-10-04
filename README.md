@@ -34,15 +34,17 @@ AI tools are only as good as the instructions they are given, and most people we
 
 ## The problems it solves
 
-| What people say | What is really wrong | How Cuelara helps |
+These are the everyday frustrations people have when they use AI, and what Cuelara does about each one.
+
+| What people say about AI | What is really behind it | How Cuelara helps |
 | --- | --- | --- |
-| "The AI keeps giving me generic answers." | The prompt is vague or missing key details. | **Optimizer** rewrites it. **Score** shows what is weak. |
-| "It ignores half of what I asked." | Instructions conflict or are ambiguous. | **Debugger** finds each flaw and how to fix it. |
-| "I do not know how to ask for this." | A blank page is hard. | **Builder** and the **Prompt book** start you off. |
-| "My prompts are long and expensive." | Wording is padded and repeats itself. | **Token Optimizer** shortens it. **Diff & Cost** proves the saving. |
-| "My document is too big to paste." | Whole files waste tokens and cause mistakes. | **Context Extractor** pulls out just the relevant parts. |
-| "I want something that looks like that website." | Design is hard to put into words. | **Site to Prompt** measures the real page and writes the prompt. |
-| "I do not know which tool I need." | Too many options, no guidance. | **Guided start** matches your problem to the right tool. |
+| "It keeps giving me generic answers." | The prompt is vague or missing key details. | **Prompt Optimizer** rewrites it with a clear role, steps and format. |
+| "It ignores half of what I asked." | The instructions conflict or can be read two ways. | **Prompt Debugger** finds each flaw and shows how to fix it. |
+| "I do not know how to ask for this." | Knowing what you want is not the same as knowing how to phrase it. | **Prompt Builder** turns a rough idea into a complete prompt. |
+| "I always start from a blank page." | Every task begins from zero. | **Prompt book** and **Template Generator** give ready-made prompts to fill in. |
+| "The answer comes back messy." | The prompt never said what the answer should look like. | **Prompt Formatter** gives the prompt a clear structure, and the Builder adds the output format. |
+| "I cannot tell if my prompt is any good." | You only find out after you have sent it. | **Intelligence Score** grades it before you send it and says what to improve. |
+| "My document is too big to paste." | AI cannot take the whole file, and long pastes lead to mistakes. | **Context Extractor**, built on **RAG** (retrieval-augmented generation), finds the relevant parts and hands you just those. |
 
 ## The whole platform at a glance
 
@@ -61,7 +63,7 @@ flowchart TB
     subgraph CORE["The product"]
         direction TB
         H["Guided start<br/>describe your problem,<br/>get the right tool"]:::ai
-        T["Toolkit<br/>build, fix, save tokens,<br/>add context"]:::ai
+        T["Toolkit<br/>build, fix, save tokens,<br/>add context with RAG"]:::ai
         B["Prompt book<br/>ready-made prompts<br/>and an editor"]:::ai
     end
     subgraph ACCOUNT["Accounts and plans"]
@@ -115,7 +117,7 @@ flowchart LR
     classDef warn fill:#fffbeb,stroke:#f59e0b,color:#78350f
 ```
 
-<sub>**Under the hood:** every tool description and every prompt in the book is turned into a meaning fingerprint (an embedding) once. The visitor's sentence gets one on request and the closest meaning wins, so nothing depends on exact keywords.</sub>
+<sub>**Under the hood:** this is embedding-based retrieval (the same idea as the retrieval half of RAG): every tool description and every prompt in the book is turned into a meaning fingerprint (an embedding) once. The visitor's sentence gets one on request and the closest meaning wins, so nothing depends on exact keywords.</sub>
 
 ---
 
@@ -188,29 +190,29 @@ flowchart LR
 
 <sub>**Under the hood:** measuring happens in your own browser, so it sees the page as you see it, including pages behind a login. Colour and layout facts are computed by rules first, which keeps the AI step short, cheap and consistent.</sub>
 
-### 4. Context Extractor
+### 4. Context Extractor (RAG)
 
 > **The pain:** Your document is too big to paste into the AI, and pasting all of it is expensive and invites made-up answers.
 
-**What you get:** Upload a document, ask a question, and get only the passages that matter, ready to paste, with the tokens you saved. &nbsp;[Try it live ↗](https://cuelara.com/tools/context-extractor)
+**What you get:** Upload a document, ask a question, and get only the passages that matter, ready to paste, with the tokens you saved. This tool is a **RAG** (retrieval-augmented generation) pipeline: the AI is given only the retrieved passages instead of the whole file. &nbsp;[Try it live ↗](https://cuelara.com/tools/context-extractor)
 
 ```mermaid
 flowchart LR
     A["Upload a document<br/>PDF, Word, text, Markdown,<br/>CSV or JSON"]:::in --> B["Cuelara reads<br/>the text"]:::ai
-    B --> C["Splits it into<br/>small passages"]:::ai
-    C --> D["Turns each passage<br/>into a meaning fingerprint<br/>(embedding)"]:::ai
+    B --> C["RAG step 1: split it<br/>into small passages<br/>(chunking)"]:::ai
+    C --> D["RAG step 2: turn each<br/>passage into a meaning<br/>fingerprint (embedding)"]:::ai
     E["You ask a question"]:::in --> F["The question gets<br/>a fingerprint too"]:::ai
-    D --> G["Find the passages<br/>closest in meaning"]:::ai
+    D --> G["RAG step 3: retrieve the<br/>passages closest in meaning"]:::ai
     F --> G
-    G --> H["Only the relevant parts,<br/>ready to paste"]:::out
-    H --> I["Tokens saved<br/>shown to you"]:::out
+    G --> H["Only the relevant parts<br/>go to the AI as its context"]:::out
+    H --> I["Grounded answer material,<br/>ready to paste, with the<br/>tokens saved shown"]:::out
     classDef in fill:#eef2ff,stroke:#6366f1,color:#1e1b4b
     classDef ai fill:#f5f3ff,stroke:#8b5cf6,color:#2e1065
     classDef out fill:#ecfdf5,stroke:#10b981,color:#064e3b
     classDef warn fill:#fffbeb,stroke:#f59e0b,color:#78350f
 ```
 
-<sub>**Under the hood:** this is retrieval by meaning, not keyword search, so a question can find a passage that uses different words. Uploaded documents expire automatically and are cleaned up on later uploads.</sub>
+<sub>**Under the hood:** this is **RAG**: documents are chunked and embedded, the question is embedded the same way, and the closest chunks are retrieved by vector similarity. It is retrieval by meaning, not keyword search, so a question can find a passage that uses different words. Giving the AI only the relevant passages also cuts made-up answers, because it works from your document and not from guesswork. Uploaded documents expire automatically and are cleaned up on later uploads.</sub>
 
 ### 5. Prompt Optimizer
 
@@ -447,7 +449,7 @@ flowchart LR
 ## What this project demonstrates
 
 - **Product thinking:** a journey that starts from the user's problem instead of a list of features.
-- **Applied AI:** meaning-based matching and retrieval, prompt design, real token accounting and cost-aware model use.
+- **Applied AI:** a RAG pipeline (chunking, embeddings, vector retrieval), meaning-based matching of problems to tools and prompts, prompt design, real token accounting and cost-aware model use.
 - **Full-stack delivery:** a public site, accounts and billing, an admin back office, a browser extension and an API, built and shipped by one person.
 - **Data and operations:** careful, additive database changes on a live product, caching, and graceful failure.
 
