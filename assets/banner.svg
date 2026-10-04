@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="Cuelara: the AI toolkit and prompt book">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="0.55" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#818cf8"/>
+      <stop offset="0.5" stop-color="#c084fc"/>
+      <stop offset="1" stop-color="#f472b6"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0.15" cy="0.2" r="0.6">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.9" cy="0.9" r="0.55">
+      <stop offset="0" stop-color="#ec4899" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="420" fill="url(#bg)"/>
+  <rect width="1280" height="420" fill="url(#grid)"/>
+  <rect width="1280" height="420" fill="url(#glowA)"/>
+  <rect width="1280" height="420" fill="url(#glowB)"/>
+
+  <!-- floating tool chips -->
+  <g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e2e8f0">
+    <g transform="translate(96 92) rotate(-6)"><rect width="132" height="40" rx="20" fill="#10b981" fill-opacity="0.16" stroke="#10b981" stroke-opacity="0.5"/><text x="66" y="26" text-anchor="middle">Fix a prompt</text></g>
+    <g transform="translate(1040 80) rotate(5)"><rect width="150" height="40" rx="20" fill="#f97316" fill-opacity="0.16" stroke="#f97316" stroke-opacity="0.5"/><text x="75" y="26" text-anchor="middle">Build a prompt</text></g>
+    <g transform="translate(64 300) rotate(4)"><rect width="150" height="40" rx="20" fill="#f59e0b" fill-opacity="0.16" stroke="#f59e0b" stroke-opacity="0.5"/><text x="75" y="26" text-anchor="middle">Save tokens</text></g>
+    <g transform="translate(1066 306) rotate(-5)"><rect width="140" height="40" rx="20" fill="#0ea5e9" fill-opacity="0.16" stroke="#0ea5e9" stroke-opacity="0.5"/><text x="70" y="26" text-anchor="middle">Add context</text></g>
+  </g>
+
+  <g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text x="640" y="120" font-size="17" font-weight="700" letter-spacing="4" fill="#a5b4fc">AI TOOLKIT  ·  PROMPT BOOK</text>
+    <text x="640" y="222" font-size="112" font-weight="800" letter-spacing="-3" fill="url(#word)">Cuelara</text>
+    <text x="640" y="278" font-size="26" font-weight="500" fill="#e2e8f0">Get better results from AI, starting with the prompt.</text>
+    <text x="640" y="336" font-size="18" font-weight="600" fill="#94a3b8">cuelara.com</text>
+  </g>
+</svg>
